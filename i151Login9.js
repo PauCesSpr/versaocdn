@@ -1,0 +1,221 @@
+//COLOCADO ARQUIVO NO GITHUB , CLICADO NELE, COPIADO  O LINK E
+//COLADO EM GITUB NO https://www.jsdelivr.com/, CRIADO O LINK DE CDN
+//https://cdn.jsdelivr.net/gh/PauCesSpr/versaocdn@main/i150Login8.js
+//colocado link no head do html
+//retirado o importe do modulo no i150TelaLogin8.js
+
+
+
+
+
+class Login{
+    
+
+    static logado = false;  
+    static matLogado = null;
+    static nomeLogado = null;
+    static ascessologado = null; 
+
+    static estilocss = null;
+
+    static callback_0k = null;
+    
+    static callback_nao0k = null;
+
+
+    static config = {
+        cor:"048",//"rgb(114, 114, 180,1)",   
+        img: "../img/logo.png",
+
+        endpoint:null//"https://cfCursos.sprocasti.repl.co"
+    };
+
+
+    
+    
+
+    //NESSA AULA PASSOU O STYLO TODO PARA CSSS
+
+    static login=(callback_0k,callback_nao0k, config)=>{
+        sessionStorage.setItem("logado", "false")
+        sessionStorage.setItem("matlogado", "")
+        sessionStorage.setItem("nomelogado", "")
+        sessionStorage.setItem("ascessologado", "")
+
+        if(config != null){
+            this.config = config;
+        }
+
+        this.callback_0k = () =>{
+            callback_0k()
+        }
+
+        this.callback_nao0k = () =>{
+            callback_nao0k()
+        }
+        
+
+        //this.endpoint += `?matricula=${mat}&senha=${pas}`;
+
+        this.estilocss =  
+        ".fundoLogin{display: flex;justify-content: center;align-items: center;width: 100%;height: 100vh;position: absolute;top: 0px;left: px;background-color: rgba(0, 0, 0, 0.75);box-sizing: border-box;}"+
+        ".baseLogin{display: flex;justify-content: center;align-items: stretch;width: 50%;box-sizing: inherit;}"+
+        ".elemetosLogin{display: flex;justify-content: center;align-items: flex-start;flex-direction: column;width: 50%;background-color: #eee;padding: 10px;border-radius: 10px 0px 0px 10px;box-sizing: inherit;}"+
+        ".logoLogin{display: flex;justify-content: center;align-items: center;width: 50%;background-color: #bbb;padding: 10px;border-radius: 0px 10px 10px 0px;box-sizing: inherit;}"+
+        ".campoLogin label{font-size: 18px;}"+
+        ".campoLogin input{font-size: 18px;padding: 5px;background-color: #eee;border-radius: 5px;}"+
+        ".logoLogin img{width: 50%; box-sizing: inherit;}"+
+        ".campoLogin{display: flex;justify-content: flex-start;align-items: flex-start;flex-direction: column;box-sizing: inherit;margin-bottom: 10px;}"+
+        ".botaoLogin{display: flex;justify-content: space-around;align-items: center;width: 100%;box-sizing: inherit;}"+
+        `.botaoLogin button{cursor: pointer;background-color:#${this.config.cor};color: #eee;border-radius: 5px;padding: 10px;width: 45%;box-sizing: inherit;}`
+
+        const styleEstilo = document.createElement("style")
+        styleEstilo.setAttribute('id',"id_estiloLogin");
+        styleEstilo.setAttribute('rel',"stylesheet");
+        styleEstilo.setAttribute('type',"text/css");
+        styleEstilo.innerHTML = this.estilocss
+
+        document.head.append(styleEstilo)
+
+        //html
+        const corpo = document.body;
+        const fundoLogin = document.createElement("div");
+        fundoLogin.setAttribute("id", "fundoLogin");
+        fundoLogin.setAttribute("class", "fundoLogin");
+        document.body.prepend(fundoLogin)
+
+        const baseLogin = document.createElement("div");
+        baseLogin.setAttribute("id", "baseLogin");
+        baseLogin.setAttribute("class", "baseLogin");
+        fundoLogin.appendChild(baseLogin)
+
+        const elemetosLogin = document.createElement("div");
+        elemetosLogin.setAttribute("id", "elemetosLogin");
+        elemetosLogin.setAttribute("class", "elemetosLogin");
+        baseLogin.appendChild(elemetosLogin)
+
+        //
+        const campoLoginUsername = document.createElement("div");
+        campoLoginUsername.setAttribute("id", "campoLoginUsername");
+        campoLoginUsername.setAttribute("class", "campoLogin");
+        elemetosLogin.appendChild(campoLoginUsername)
+
+        const labelUsername = document.createElement("label");
+        labelUsername.innerHTML = "Username"
+        campoLoginUsername.appendChild(labelUsername)
+
+        const inputUsername = document.createElement("input");
+        inputUsername.setAttribute("id", "f_username");
+        inputUsername.setAttribute("type", "text");
+        inputUsername.setAttribute("name", "f_username");
+        campoLoginUsername.appendChild(inputUsername)
+        //
+        const campoLoginSenha = document.createElement("div");
+        campoLoginSenha.setAttribute("id", "campoLoginSenha");
+        campoLoginSenha.setAttribute("class", "campoLogin");
+        elemetosLogin.appendChild(campoLoginSenha)
+
+        const labelSenha = document.createElement("label");
+        labelSenha.innerHTML = "Senha"
+        campoLoginSenha.appendChild(labelSenha)
+
+        const inputSenha = document.createElement("input");
+        inputSenha.setAttribute("id", "f_senha");
+        inputSenha.setAttribute("type", "password");
+        inputSenha.setAttribute("name", "f_senha");
+        campoLoginSenha.appendChild(inputSenha)
+        //
+
+        const botaoLogin = document.createElement("div");
+        botaoLogin.setAttribute("class", "botaoLogin");
+        elemetosLogin.appendChild(botaoLogin)
+
+        const btn_login = document.createElement("button");
+        btn_login.setAttribute("id", "btn_login");
+        btn_login.innerHTML = "Login"
+        btn_login.addEventListener('click', (evt)=>{
+            this.verificaLogin();
+      
+        })
+        botaoLogin.appendChild(btn_login)
+
+        const btn_cancelar = document.createElement("button");
+        btn_cancelar.setAttribute("id", "btn_cancelar");
+        btn_cancelar.innerHTML = "Cancelar"
+        btn_cancelar.addEventListener('click', (evt)=>{
+            sessionStorage.setItem("logado", "false")
+            sessionStorage.setItem("matlogado", "")
+            sessionStorage.setItem("nomelogado", "")
+            sessionStorage.setItem("ascessologado", "")
+            this.fechar();
+        })
+        botaoLogin.appendChild(btn_cancelar)
+
+        //
+        const logoLogin = document.createElement("div");
+        logoLogin.setAttribute("id", "logoLogin");
+        logoLogin.setAttribute("class", "logoLogin");
+        baseLogin.appendChild(logoLogin)
+
+        const imglogoLogin = document.createElement("img");
+        imglogoLogin.setAttribute("src", this.config.img);
+        imglogoLogin.setAttribute("title", "cbf");
+        logoLogin.appendChild(imglogoLogin)
+
+    }
+
+    static verificaLogin = () =>{
+        //pegando do campo dos imputos
+        const mat = document.getElementById("f_username").value;
+        const pas =document.getElementById("f_senha").value;
+
+        //const endpoint = `https://cfcursos.sprocasti.repl.co/?matricula=${mat}&senha=${pas}`
+        const endpoint = `${this.config.endpoint}/?matricula=${mat}&senha=${pas}`
+        fetch(endpoint)
+        .then(res=>res.json())
+        .then(res=>{
+            //console.log(res)
+            if(res){
+                // this.logado = true;
+                // this.matLogado = mat;
+                // this.nomeLogado = res.nome;
+                // this.ascessologado = res.ascesso;
+                sessionStorage.setItem("logado", "true")
+                sessionStorage.setItem("matlogado", mat)
+                sessionStorage.setItem("nomelogado", res.nome)
+                sessionStorage.setItem("ascessologado", res.ascesso)
+                this.callback_0k()
+                this.fechar();
+            }else{
+                // this.logado = false;
+                // this.matLogado = mat;
+                // this.nomeLogado = null;
+                // this.ascessologado = null;
+                sessionStorage.setItem("logado", "false")
+                sessionStorage.setItem("matlogado", "")
+                sessionStorage.setItem("nomelogado", "")
+                sessionStorage.setItem("ascessologado", "")
+                this.callback_nao0k();
+                //console.log("Usuario nao encontrado")
+            }
+
+        })
+
+        // if(mat == '123'  && pas == "321"){  
+        //     return true;
+        // }else{
+        //     return false
+        // }
+            }
+
+    //metodo ára remover elementos 
+    static fechar = ()=>{
+        const fundoLogin  = document.getElementById("fundoLogin");
+        fundoLogin.remove();
+
+        const id_estiloLogin = document.getElementById("id_estiloLogin");
+        id_estiloLogin.remove();       
+    }
+}
+
+//export {Login};
